@@ -5,20 +5,24 @@ export class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
   handleChange = e => {
-    console.log('e.target.value  :>> ', e.target.value);
-    this.setState({ name: e.target.value });
+    const { name, value } = e.target;
+    this.setState({ [name]: value.trim() });
   };
 
   handleSubmit = e => {
     e.preventDefault();
 
     this.setState(prev => ({
-      contacts: [...prev.contacts, { name: this.state.name, id: nanoid() }],
+      contacts: [
+        ...prev.contacts,
+        { name: this.state.name, id: nanoid(), number: this.state.number },
+      ],
     }));
-    this.setState({ name: '' });
+    this.setState({ name: '', number: '' });
   };
 
   render() {
@@ -32,8 +36,25 @@ export class App extends Component {
             value={this.state.name}
             required
           />
+          <input
+            type="tel"
+            name="number"
+            onChange={this.handleChange}
+            value={this.state.number}
+            required
+          />
           <button type="submit">Add contact</button>
         </form>
+        <ul>
+          {this.state.contacts.map(({ id, name, number }) => {
+            return (
+              <li key={id}>
+                <p>{name} </p>
+                <p>{number}</p>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }
