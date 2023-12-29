@@ -36,10 +36,9 @@ export class App extends Component {
   render() {
     const { contacts, filter } = this.state;
 
-    const filteredContacts = contacts.filter(contact => {
-      return contact.name.toLowerCase().includes(filter);
+    const filteredContacts = contacts.filter(({ name }) => {
+      return name.toLowerCase().includes(filter);
     });
-    console.log('filteredContacts :>> ', filteredContacts);
 
     return (
       <div>
