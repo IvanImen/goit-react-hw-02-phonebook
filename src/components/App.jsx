@@ -18,6 +18,15 @@ export class App extends Component {
   };
 
   addContact = (name, number) => {
+    const isPresent = this.state.contacts.find(
+      contact => contact.name === name
+    );
+
+    if (isPresent) {
+      alert(`${name} is already in the phonebook`);
+      return;
+    }
+
     this.setState(prev => ({
       contacts: [...prev.contacts, { name, id: nanoid(), number }],
     }));
